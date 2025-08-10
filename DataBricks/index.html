@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhargav Chirumamilla - Data Scientist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap');
+        
+        :root {
+            --bg-color: #0d1117;
+            --main-text-color: #c9d1d9;
+            --muted-text-color: #8b949e;
+            --accent-blue: #337ab7;
+            --node-bg: rgba(22, 27, 34, 0.8);
+            --node-hover-bg: rgba(40, 45, 52, 0.9);
+            --content-bg: #161b22;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--main-text-color);
+            overflow: hidden;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-node-title {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        .node {
+            position: absolute;
+            background-color: var(--node-bg);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(51, 122, 183, 0.5);
+            z-index: 10;
+        }
+
+        .node-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(51, 122, 183, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(51, 122, 183, 0.8); }
+        }
+
+        .node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px var(--accent-blue);
+            background-color: var(--node-hover-bg);
+        }
+        
+        .node-main {
+            width: 25vmin;
+            height: 25vmin;
+            font-size: 3vmin;
+            line-height: 1.2;
+            padding: 1rem;
+            color: #fff;
+            background-color: rgba(51, 122, 183, 0.8);
+            border-color: #fff;
+            box-shadow: 0 0 30px #fff;
+            z-index: 15;
+            animation: pulse-main 4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+
+        @keyframes pulse-main {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 255, 255, 1); }
+        }
+
+        .node-small {
+            width: 15vmin;
+            height: 15vmin;
+            font-size: 1.8vmin;
+        }
+
+        .content-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 90%;
+            max-width: 800px;
+            height: 90%;
+            max-height: 600px;
+            background-color: var(--content-bg);
+            border: 2px solid var(--accent-blue);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 30px rgba(51, 122, 183, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #282e36;
+        }
+        
+        .content-body {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--main-text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .close-btn:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* New vertical layout for Experience section */
+        .experience-timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid #444;
+        }
+        .experience-timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .experience-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            border: 2px solid var(--bg-color);
+        }
+        .experience-card {
+            background: #282e36;
+            border: 1px solid #444;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .experience-card:hover {
+            box-shadow: 0 0 15px rgba(51, 122, 183, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        /* New vertical layout for Projects section */
+        .projects-timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid #444;
+        }
+        .projects-timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .projects-timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            border: 2px solid var(--bg-color);
+        }
+        .project-card {
+            background: #282e36;
+            border: 1px solid #444;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .project-card:hover {
+            box-shadow: 0 0 15px rgba(51, 122, 183, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive layout for nodes */
+        @media (max-width: 768px) {
+            .node-main { width: 40vmin; height: 40vmin; font-size: 4.5vmin; }
+            .node-small { width: 20vmin; height: 20vmin; font-size: 2.5vmin; }
+            .content-panel { width: 95%; height: 95%; max-width: none; max-height: none; }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container" id="nodes-container">
+        <!-- Main Node -->
+        <div id="node-summary" class="node node-main flex items-center justify-center text-center node-pulse">
+            <span class="main-node-title">Bhargav<br/>Chirumamilla</span>
+        </div>
+        
+        <!-- Other Nodes -->
+        <div id="node-experience" class="node node-small">
+            <i class="fas fa-briefcase text-xl mb-1"></i>
+            <span class="font-semibold">Experience</span>
+        </div>
+        <div id="node-skills" class="node node-small">
+            <i class="fas fa-flask text-xl mb-1"></i>
+            <span class="font-semibold">Skills</span>
+        </div>
+        <div id="node-projects" class="node node-small">
+            <i class="fas fa-code text-xl mb-1"></i>
+            <span class="font-semibold">Projects</span>
+        </div>
+        <div id="node-publications" class="node node-small">
+            <i class="fas fa-newspaper text-xl mb-1"></i>
+            <span class="font-semibold">Publications</span>
+        </div>
+    </div>
+
+    <!-- Content Panel -->
+    <div id="content-panel" class="content-panel">
+        <div class="content-header">
+            <h2 id="content-title" class="text-2xl font-bold"></h2>
+            <button id="close-btn" class="close-btn">&times;</button>
+        </div>
+        <div id="content-body" class="content-body text-sm leading-relaxed text-muted-text-color">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const resumeData = {
+            summary: `I'm a Data Scientist and M.S.E. in Computer Science candidate with a passion for transforming complex data into actionable strategies. My expertise lies in building and deploying scalable machine learning, **causal inference**, and **time series forecasting** models on platforms like **Databricks**. I thrive on solving ambiguous problems through cross-functional collaboration, with a proven track record of optimizing data pipelines and delivering production-ready AI solutions.`,
+            experience: [
+                {
+                    title: "Data Science Intern", company: "AARP Services Inc.", date: "Aug 2025 -- Present",
+                    bullets: [
+                        "I used **Databricks**, SQL, and Python to perform deep quantitative analysis of member data, uncovering behavioral patterns that directly shaped a new marketing strategy and boosted engagement by 10%.",
+                        "I designed and optimized scalable machine learning models for data mining, **NLP**, and **generative AI** applications, resulting in a 30% reduction in data processing time and a 15% improvement in topic modeling accuracy."
+                    ]
+                },
+                {
+                    title: "AI/ML Engineer Intern", company: "Sokat", date: "Feb 2025 -- Jun 2025",
+                    bullets: [
+                        "I engineered a powerful Retrieval-Augmented Generation (RAG) system, leveraging LLaMA-3 to handle over 5,000 unique, personalized Q&A queries daily.",
+                        "I built a data enrichment pipeline that transformed unstructured inputs into structured knowledge graphs, enhancing downstream reasoning accuracy by 25%."
+                    ]
+                },
+                {
+                    title: "ML Engineer", company: "Stealth Startup", date: "Jan 2024 -- Dec 2024",
+                    bullets: [
+                        "I developed an **Agentic RAG** architecture for a real-time **recommendation engine**, processing over 100,000 documents to deliver highly relevant, low-latency suggestions to users.",
+                        "I enhanced query understanding and **ranking accuracy** by 20% by creating a Reasoning and Action Agent, enabling the system to better personalize results based on complex user intent."
+                    ]
+                },
+                {
+                    title: "Research Assistant", company: "IIT Dharwad", date: "Mar 2023 -- May 2024",
+                    bullets: [
+                        "I conducted advanced research on generative models (GANs, VAEs) and LSTMs for anomaly and data-drift detection, resulting in four peer-reviewed publications.",
+                        "I created a real-time monitoring dashboard with **Prometheus** to collect and analyze findings from live data, which led to a **48%** performance gain over baseline models."
+                    ]
+                },
+                {
+                    title: "Software Engineer -- AI Intern", company: "Alpar Consulting Group", date: "Feb 2023 -- Sep 2023",
+                    bullets: [
+                        "I deployed NLP models (**BERT, XLNet**) for a large-scale text classification and routing system, processing over 50,000 user-generated content pieces monthly for effective **targeting**.",
+                        "I built robust ETL pipelines with PySpark and SQL, which improved data quality for downstream **ranking and classification models** by 30% and reduced processing time by 40%."
+                    ]
+                }
+            ],
+            skills: [
+                { category: 'ML Techniques', list: ['Causal Inference', 'Time-Series Analysis', 'Regression & Classification', 'Anomaly Detection', 'Supervised & Unsupervised Learning', 'Generative AI', 'Decision Trees', 'Random Forests', 'Ranking', 'Embeddings', 'Drift and Change Detection'] },
+                { category: 'ML Domains', list: ['Recommendation Systems', 'Ads Ranking', 'Information Retrieval', 'NLP'] },
+                { category: 'Languages', list: ['Python', 'SQL', 'C', 'R'] },
+                { category: 'Frameworks & Libraries', list: ['PyTorch', 'TensorFlow', 'MLFlow', 'HuggingFace', 'Scikit-learn', 'Pandas', 'NumPy', 'Spark'] },
+                { category: 'Tools & Platforms', list: ['Databricks', 'Git', 'Docker', 'Kubernetes', 'Hadoop', 'Kafka', 'AWS', 'Azure', 'Prometheus', 'Power BI', 'Tableau'] }
+            ],
+            projects: [
+                {
+                    title: "Agentic Recommender System for Real-Time Retrieval", tech: "RAG, LFU Cache, LLMs (LLaMA-3)",
+                    description: "Engineered a scalable hybrid recommender system that combines real-time document retrieval and LLM-based user intent for a mock marketplace. This project reduced inference latency by 60% through optimized caching and prompt engineering, while also supporting multimodal inputs and user personalization feedback."
+                },
+                {
+                    title: "AI-Powered Web Theme Extractor", tech: "Multi-LLM (OpenAI, Gemini), Streamlit, PyTorch",
+                    description: "I developed a multi-agent LLM pipeline to scrape, classify, and summarize over 1,000 articles, achieving a high 90% accuracy in theme classification. To make the insights accessible, I built a real-time Streamlit dashboard that visualizes theme analytics and provides export capabilities for business users."
+                },
+                {
+                    title: "Personalized Text-to-SQL LLM Prototype", tech: "Python, PyTorch, HuggingFace, CodeLlama, SQLite, Pandas, LangChain",
+                    description: "I fine-tuned CodeLlama on the Spider and WikiSQL datasets, enabling it to convert natural language into executable SQL with 88% accuracy on domain-specific queries. To improve performance on customer data, I integrated schema linking and table embeddings, which reduced semantic errors by 20%."
+                },
+                {
+                    title: "Real-Time Recommendation Engine for Financial Trading", tech: "Apache Kafka, PySpark, AWS, Python",
+                    description: "I constructed a real-time stock market pipeline using **Kafka** and a Stock **AI Agent**. The system integrates an LLM for price predictions and trading recommendations, achieving 85% accuracy."
+                }
+            ],
+            publications: [
+                "**Generative-AI for AI/ML Model Adaptive Retraining in Beyond 5G Networks**, Computer Networks",
+                "**GAN-based Drift and Anomaly Detection for Open Radio Access Networks**, IEEE HPSR-2024",
+                "**EARNEST: Experimental Analysis of RAN Energy with Open-Source Software Tools**, IEEE COMSNETS, 2024",
+                "**AI/ML Model Training in O-RAN: Assessing Datasets for Hoarding and Choosing Strategies**, IEEE ANTS-2023"
+            ]
+        };
+
+        const nodes = document.querySelectorAll('.node');
+        const contentPanel = document.getElementById('content-panel');
+        const contentTitle = document.getElementById('content-title');
+        const contentBody = document.getElementById('content-body');
+        const closeBtn = document.getElementById('close-btn');
+        const container = document.getElementById('nodes-container');
+
+        function positionNodes() {
+            const center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            
+            // Define positions relative to the center and viewport size
+            const nodePositions = {
+                'node-summary': { x: center.x, y: center.y },
+                'node-experience': { x: center.x + 0.3 * window.innerWidth, y: center.y - 0.2 * window.innerHeight },
+                'node-skills': { x: center.x - 0.3 * window.innerWidth, y: center.y - 0.1 * window.innerHeight },
+                'node-projects': { x: center.x - 0.2 * window.innerWidth, y: center.y + 0.25 * window.innerHeight },
+                'node-publications': { x: center.x + 0.25 * window.innerWidth, y: center.y + 0.15 * window.innerHeight },
+            };
+
+            nodes.forEach(node => {
+                const id = node.id;
+                const pos = nodePositions[id];
+                node.style.left = `${pos.x - node.offsetWidth / 2}px`;
+                node.style.top = `${pos.y - node.offsetHeight / 2}px`;
+            });
+        }
+        
+        window.addEventListener('resize', positionNodes);
+
+        async function callGeminiAPI(prompt, retries = 0) {
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 429 && retries < 5) {
+                        const delay = Math.pow(2, retries) * 1000;
+                        await new Promise(res => setTimeout(res, delay));
+                        return callGeminiAPI(prompt, retries + 1);
+                    } else {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+                }
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Unexpected API response structure.");
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                throw error;
+            }
+        }
+        
+        async function handleElaborate(event) {
+            const button = event.target;
+            const projectIndex = button.dataset.projectIndex;
+            const project = resumeData.projects[projectIndex];
+
+            const initialText = button.innerHTML;
+            button.innerHTML = '<div class="loading-spinner"></div>';
+            button.disabled = true;
+
+            const prompt = `Elaborate on the following project description, focusing on the technical components and the business/technical impact. Write a short paragraph that is more descriptive and engaging. Project Title: "${project.title}", Technology: "${project.tech}", Description: "${project.description}"`;
+            
+            try {
+                const result = await callGeminiAPI(prompt);
+                const parentCard = button.closest('.project-card');
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'mt-4 p-4 bg-gray-800 rounded-lg';
+                resultDiv.innerHTML = `<p class="font-bold text-databricks-blue">AI-Generated Elaboration:</p><p class="mt-2 text-sm text-gray-400">${result}</p>`;
+                
+                // Check if elaboration already exists to avoid duplicates
+                const existingElaboration = parentCard.querySelector('.ai-elaboration');
+                if (existingElaboration) {
+                    existingElaboration.remove();
+                }
+
+                resultDiv.classList.add('ai-elaboration');
+                parentCard.appendChild(resultDiv);
+            } catch (error) {
+                console.error("Error elaborating on project:", error);
+                button.innerHTML = 'Error';
+            } finally {
+                button.innerHTML = initialText;
+                button.disabled = false;
+            }
+        }
+
+
+        function populateContent(sectionId) {
+            let content = '';
+            switch(sectionId) {
+                case 'summary':
+                    contentTitle.textContent = 'Summary';
+                    content = `<p>${resumeData.summary.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</p>`;
+                    break;
+                case 'experience':
+                    contentTitle.textContent = 'Experience';
+                    content = `
+                        <p class="text-gray-400 mb-6 leading-relaxed">Here's a look at my professional journey, where I've leveraged machine learning and data science to drive tangible results across various organizations. Scroll to explore my roles and impact.</p>
+                        <div class="experience-timeline">
+                        ${resumeData.experience.map(job => `
+                            <div class="experience-timeline-item">
+                                <div class="experience-card">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h3 class="text-lg font-bold text-databricks-blue">${job.title}</h3>
+                                            <p class="text-sm text-gray-300">${job.company}</p>
+                                        </div>
+                                        <span class="text-xs text-gray-500">${job.date}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-400 mt-2 space-y-2">
+                                        ${job.bullets.map(bullet => `<p>${bullet.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</p>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                        </div>
+                    `;
+                    break;
+                case 'skills':
+                    contentTitle.textContent = 'Skills';
+                    content = `
+                        <p class="text-gray-400 mb-4">My toolbox is built around a powerful mix of languages, frameworks, and platforms, with a focus on delivering robust and scalable data solutions.</p>
+                        ${resumeData.skills.map(skill => `
+                            <div class="mb-4">
+                                <h3 class="text-lg font-bold text-databricks-blue mb-2">${skill.category}</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    ${skill.list.map(item => `<span class="px-3 py-1 rounded-full text-xs bg-gray-700 text-gray-200">${item}</span>`).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    `;
+                    break;
+                case 'projects':
+                    contentTitle.textContent = 'Projects';
+                    content = `
+                        <p class="text-gray-400 mb-6 leading-relaxed">These projects demonstrate my ability to apply advanced ML techniques to real-world challenges, from building intelligent recommendation systems to developing sophisticated data extraction pipelines.</p>
+                        <div class="projects-timeline">
+                            ${resumeData.projects.map((project, index) => `
+                                <div class="projects-timeline-item">
+                                    <div class="project-card">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="text-lg font-bold text-databricks-blue">${project.title}</h3>
+                                                <p class="text-sm text-gray-300">${project.tech}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-400 mt-2 space-y-2">
+                                            <p>${project.description.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</p>
+                                            <button class="mt-4 px-4 py-2 text-xs font-semibold rounded-lg bg-databricks-blue hover:bg-databricks-blue-light transition-colors flex items-center justify-center space-x-2 elaborate-btn" data-project-index="${index}">
+                                                ✨ Elaborate on Impact
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    break;
+                case 'publications':
+                    contentTitle.textContent = 'Publications';
+                    content = `
+                        <p class="text-gray-400 mb-4">My research has been published in several peer-reviewed conferences and journals, focusing on the intersection of generative AI, model retraining, and network analysis.</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400">
+                            ${resumeData.publications.map(pub => `<li>${pub.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</li>`).join('')}
+                        </ul>
+                    `;
+                    break;
+            }
+            contentBody.innerHTML = content;
+            if (sectionId === 'projects') {
+                document.querySelectorAll('.elaborate-btn').forEach(btn => {
+                    btn.addEventListener('click', handleElaborate);
+                });
+            }
+        }
+
+        nodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const sectionId = node.id.replace('node-', '');
+                populateContent(sectionId);
+                contentPanel.classList.add('active');
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            contentPanel.classList.remove('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Updated resumeData to move project bullets to a single description for better display
+            resumeData.projects = resumeData.projects.map(project => {
+                if (Array.isArray(project.bullets)) {
+                    project.description = project.bullets.join(' ');
+                }
+                return project;
+            });
+            positionNodes();
+        });
+    </script>
+</body>
+</html>
