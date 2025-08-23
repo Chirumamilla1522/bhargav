@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bhargav Chirumamilla - Data Scientist</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg: #fefefe;
+            --card-bg: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --accent: #e91e63; /* Pinterest Pink */
+            --border: #eee;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-theme {
+            --bg: #111111;
+            --card-bg: #1a1a1a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #aaaaaa;
+            --border: #333;
+            --shadow: rgba(0, 0, 0, 0.2);
+            color-scheme: dark;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            transition: all 0.4s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+            background-color: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            color: white;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0.5rem auto 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Download Button */
+        .download-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            background-color: white;
+            color: var(--accent);
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        /* Summary Section */
+        .summary-section {
+            text-align: center;
+            margin: 2rem 0 3rem;
+            padding: 2rem 1rem;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .summary-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Pinterest Masonry Grid */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+            margin: 0;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.15);
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            padding: 1.2rem 1.2rem 0.6rem;
+        }
+
+        .card-body {
+            padding: 0 1.2rem 1.2rem;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            background-color: var(--border);
+            padding: 0.3rem 0.6rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--border);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin: 0.2rem 0.1rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .publication-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .publication-link:hover {
+            text-decoration: underline;
+        }
+
+        .card-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin: 0.5rem 0;
+        }
+
+        /* Detail View */
+        .detail-section {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .detail-section.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            color: var(--text-primary);
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .skill-tag {
+                min-width: 60px;
+                font-size: 0.75rem;
+                padding: 0.25rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <div class="flex justify-between items-center">
+                <div class="nav-logo">Bhargav</div>
+                <div class="nav-links">
+                    <a href="#experience" class="active">Experience</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#education">Education</a>
+                    <a href="#publications">Publications</a>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Bhargav Chirumamilla</h1>
+            <p>Data Scientist & AI/ML Engineer</p>
+            <div class="contact-info">
+                <i class="fas fa-phone"></i> 202-849-0671 |
+                <a href="mailto:bhargavchiru1522@gmail.com">Email</a> |
+                <a href="https://linkedin.com/in/Bhargav" target="_blank">LinkedIn</a> |
+                <a href="https://github.com/Bhargav" target="_blank">GitHub</a>
+            </div>
+            <div class="download-container">
+                <a href="resume.pdf" download class="btn">
+                    <i class="fas fa-download"></i> Download Resume
+                </a>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="summary-section">
+            <h2 class="summary-title">Summary</h2>
+            <p class="summary-text">
+                Data Scientist and M.S.E. in Computer Science candidate (2026 start) with extensive experience in machine learning, focusing on large-scale recommender systems, ads ranking, and content understanding. Proven ability to build and deploy robust data pipelines and ML models using Hadoop/Spark and Databricks. Enthusiastic about applying deep learning and LLMs to create personalized user experiences and solve ambiguous problems in a collaborative, data-driven environment.
+            </p>
+        </section>
+
+        <!-- Detail View -->
+        <section id="detail-section" class="detail-section">
+            <button id="back-button" class="back-button">
+                <i class="fas fa-arrow-left mr-2"></i> Back
+            </button>
+            <div id="detail-content" class="card mt-4 p-6"></div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--accent);">Experience</h2>
+            <div class="masonry-grid" id="experience-grid"></div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--accent);">Projects</h2>
+            <div class="masonry-grid" id="projects-grid"></div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--accent);">Skills</h2>
+            <div class="masonry-grid" id="skills-grid"></div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--accent);">Education</h2>
+            <div class="masonry-grid" id="education-grid"></div>
+        </section>
+
+        <!-- Publications -->
+        <section id="publications" class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--accent);">Publications</h2>
+            <div class="masonry-grid" id="publications-grid"></div>
+        </section>
+
+    </div>
+
+    <script>
+        const resumeData = {
+            experience: [
+                {
+                    title: "Data Science Intern", company: "AARP Services Inc.", location: "Washington, D.C., USA", date: "Aug 2025 – Present",
+                    bullets: [
+                        "Performed quantitative analysis of members data using Databricks, SQL, and Python, identifying behavioral patterns.",
+                        "Developed and optimized scalable ML models for data mining, NLP, and generative AI."
+                    ]
+                },
+                {
+                    title: "AI/ML Engineer Intern", company: "Sokat", location: "Washington D.C., USA", date: "Feb 2025 – Jun 2025",
+                    bullets: [
+                        "Designed a scalable Retrieval-Augmented Generation (RAG) system integrating LLaMA-3 for personalized Q&A, supporting over 5,000 unique queries daily.",
+                        "Created a structured data enrichment pipeline, converting unstructured inputs into RDF-style knowledge graphs that improved downstream reasoning accuracy by 25%."
+                    ]
+                },
+                {
+                    title: "ML Engineer", company: "Stealth Startup", location: "Bangalore, India", date: "Jan 2024 – Dec 2024",
+                    bullets: [
+                        "Architected an Agentic RAG system to power a real-time recommendation engine, processing over 100,000 documents for highly relevant, low-latency suggestions.",
+                        "Enhanced query understanding and ranking accuracy by 20% with a Reasoning and Action Agent, enabling the system to navigate complex user intent."
+                    ]
+                },
+                {
+                    title: "Research Assistant", company: "IIT Dharwad", location: "Dharwad, India", date: "Mar 2023 – May 2024",
+                    bullets: [
+                        "Conducted research on generative models (GANs, VAEs) and LSTMs for anomaly and data-drift detection and post-training adaptation.",
+                        "Developed a real-time monitoring dashboard with Prometheus to collect and analyze findings from real-time data."
+                    ]
+                },
+                {
+                    title: "Software Engineer -- AI Intern", company: "Alpar Consulting Group", location: "Remote", date: "Feb 2023 – Sep 2023",
+                    bullets: [
+                        "Deployed NLP models (BERT, XLNet) for a large-scale text classification and routing system.",
+                        "Utilized PySpark and SQL to build robust ETL pipelines, improving data quality by 30% and reducing processing time by 40%."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    title: "Agentic Recommender System for Real-Time Retrieval",
+                    tech: "RAG, LFU Cache, LLMs (LLaMA-3)",
+                    description: "Engineered a scalable hybrid recommender system combining real-time document retrieval and LLM-based user intent for a mock marketplace. Reduced inference latency by 60% through optimized caching and prompt engineering."
+                },
+                {
+                    title: "AI-Powered Web Theme Extractor",
+                    tech: "Multi-LLM (OpenAI, Gemini), Streamlit, PyTorch",
+                    description: "Scraped, classified, and summarized over 1,000 articles using a multi-agent LLM pipeline, achieving 90% accuracy. Created a real-time Streamlit dashboard for business users."
+                },
+                {
+                    title: "Personalized Text-to-SQL LLM Prototype",
+                    tech: "Python, PyTorch, HuggingFace, CodeLlama, LangChain",
+                    description: "Fine-tuned CodeLlama on Spider and WikiSQL to convert natural language to SQL with 88% accuracy. Integrated schema linking to reduce semantic errors by 20%."
+                },
+                {
+                    title: "Real-Time Recommendation Engine for Financial Trading",
+                    tech: "Apache Kafka, PySpark, AWS, Python",
+                    description: "Built a real-time stock market pipeline using Kafka and a Stock AI Agent, integrating an LLM for price predictions with 85% accuracy."
+                }
+            ],
+            skills: [
+                { category: 'ML Techniques', list: ['Causal Inference', 'Time-Series Analysis', 'Generative AI', 'Anomaly Detection', 'Ranking', 'Drift Detection'] },
+                { category: 'ML Domains', list: ['Recommendation Systems', 'NLP', 'Information Retrieval', 'Ads Ranking'] },
+                { category: 'Languages', list: ['Python', 'SQL', 'R'] },
+                { category: 'Frameworks', list: ['PyTorch', 'TensorFlow', 'HuggingFace', 'Spark'] },
+                { category: 'Tools', list: ['Databricks', 'AWS', 'Kafka', 'Docker', 'Power BI'] }
+            ],
+            education: [
+                {
+                    degree: "M.S.E in Computer Science", school: "Johns Hopkins University", location: "Baltimore, MD", gpa: "GPA: 4.0"
+                },
+                {
+                    degree: "Bachelor of Technology in Computer Science", school: "Indian Institute of Technology Dharwad", location: "Dharwad, India", gpa: ""
+                }
+            ],
+            publications: [
+                { title: "Generative-AI for AI/ML Model Adaptive Retraining in Beyond 5G Networks", source: "Computer Networks" },
+                { title: "GAN-based Drift and Anomaly Detection for Open Radio Access Networks", source: "IEEE HPSR-2024", url: "https://ieeexplore.ieee.org/abstract/document/10635911" },
+                { title: "EARNEST: Experimental Analysis of RAN Energy with Open-Source Software Tools", source: "IEEE COMSNETS, 2024", url: "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10427350" },
+                { title: "AI/ML Model Training in O-RAN: Assessing Datasets for Hoarding and Choosing Strategies", source: "IEEE ANTS-2023", url: "https://drive.google.com/file/d/1elwfYCRgV5HX7dKB7Hw7iiptO3OHaoDl/view?usp=sharing" }
+            ]
+        };
+
+        // DOM Elements
+        const experienceGrid = document.getElementById('experience-grid');
+        const projectsGrid = document.getElementById('projects-grid');
+        const skillsGrid = document.getElementById('skills-grid');
+        const educationGrid = document.getElementById('education-grid');
+        const publicationsGrid = document.getElementById('publications-grid');
+        const detailSection = document.getElementById('detail-section');
+        const detailContent = document.getElementById('detail-content');
+        const backButton = document.getElementById('back-button');
+        const themeToggle = document.getElementById('theme-toggle');
+
+        // Populate Experience
+        experienceGrid.innerHTML = resumeData.experience.map(exp => `
+            <div class="masonry-item">
+                <div class="card experience-card" data-index="${exp.title}">
+                    <div class="card-header">
+                        <h3 class="card-title">${exp.title}</h3>
+                        <p class="card-subtitle">${exp.company} • ${exp.location}</p>
+                        <span class="card-date">${exp.date}</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="text-sm space-y-1">
+                            ${exp.bullets.map(b => `<li>• ${b}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Populate Projects
+        projectsGrid.innerHTML = resumeData.projects.map((p, i) => `
+            <div class="masonry-item">
+                <div class="card cursor-pointer" data-project-index="${i}">
+                    <div class="card-header">
+                        <h3 class="card-title">${p.title}</h3>
+                        <p class="card-subtitle">${p.tech}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">${p.description}</p>
+                        <button class="mt-3 px-3 py-1 bg-pinterest text-white rounded text-xs elaborate-btn hover:bg-red-600 transition">
+                            ✨ Elaborate with AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Populate Skills
+        skillsGrid.innerHTML = resumeData.skills.map(s => `
+            <div class="masonry-item">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">${s.category}</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="flex flex-wrap justify-center">
+                            ${s.list.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Populate Education
+        educationGrid.innerHTML = resumeData.education.map(edu => `
+            <div class="masonry-item">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">${edu.degree}</h3>
+                        <p class="card-subtitle">${edu.school}</p>
+                        <p class="card-subtitle">${edu.location}</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-sm">${edu.gpa}</p>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Populate Publications
+        publicationsGrid.innerHTML = resumeData.publications.map(p => `
+            <div class="masonry-item">
+                <a href="${p.url || '#'}" target="${p.url ? '_blank' : ''}" class="card hover:border-pinterest transition">
+                    <div class="card-header">
+                        <h4 class="card-title">${p.title}</h4>
+                        <p class="card-subtitle">${p.source}</p>
+                    </div>
+                    <div class="card-body flex items-end">
+                        ${p.url ? '<span class="publication-link">View Article <i class="fas fa-external-link-alt"></i></span>' : ''}
+                    </div>
+                </a>
+            </div>
+        `).join('');
+
+        // Detail View
+        function renderDetail(type, index) {
+            let item, html;
+
+            if (type === 'experience') {
+                item = resumeData.experience.find((_, i) => i == index);
+                html = `
+                    <h3 class="text-xl font-bold text-pinterest">${item.title}</h3>
+                    <p class="text-sm text-gray-500">${item.company} • ${item.location} • ${item.date}</p>
+                    <ul class="mt-4 space-y-2">
+                        ${item.bullets.map(b => `<li class="text-sm">• ${b}</li>`).join('')}
+                    </ul>
+                `;
+                backButton.onclick = () => showSection('experience');
+            } else if (type === 'project') {
+                item = resumeData.projects[index];
+                html = `
+                    <h3 class="text-xl font-bold text-pinterest">${item.title}</h3>
+                    <p class="text-sm text-gray-500">${item.tech}</p>
+                    <p class="mt-4 text-sm">${item.description}</p>
+                    <button class="mt-4 px-3 py-1 bg-pinterest text-white rounded text-xs elaborate-btn" data-project-index="${index}">
+                        <span class="loading-text">✨ Elaborate with AI</span>
+                    </button>
+                `;
+                backButton.onclick = () => showSection('projects');
+            }
+
+            detailContent.innerHTML = html;
+            document.querySelectorAll('section[id]').forEach(s => s.style.display = 'none');
+            detailSection.style.display = 'block';
+        }
+
+        // AI Elaboration (simulated)
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('elaborate-btn')) {
+                const btn = e.target;
+                const index = btn.dataset.projectIndex;
+                btn.innerHTML = '<span class="loading-spinner"></span>';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    const elaboration = `
+                        <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded text-sm">
+                            This project leverages agentic RAG architecture to enable real-time, context-aware recommendations. By combining document retrieval with LLM-driven intent analysis, it achieves low-latency responses while maintaining high relevance. Caching strategies and multimodal input support enhance scalability.
+                        </div>`;
+                    btn.parentElement.insertAdjacentHTML('beforeend', elaboration);
+                    btn.remove();
+                }, 1500);
+            }
+        });
+
+        // Navigation
+        function showSection(id) {
+            document.querySelectorAll('section[id]').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            document.querySelector('.nav-links a.active')?.classList.remove('active');
+            document.querySelector(`.nav-links a[href="#${id}"]`)?.classList.add('active');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = e.target.getAttribute('href').substring(1);
+                showSection(target);
+            });
+        });
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const icon = themeToggle.querySelector('i');
+            icon.className = document.body.classList.contains('dark-theme') ? 'fas fa-sun' : 'fas fa-moon';
+        });
+
+        // Back Button
+        backButton.addEventListener('click', () => {
+            detailSection.style.display = 'none';
+            showSection('experience');
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('experience');
+        });
+    </script>
+
+    <style>
+        .text-pinterest { color: var(--accent); }
+        .bg-pinterest { background-color: var(--accent); }
+    </style>
+</body>
+</html>
